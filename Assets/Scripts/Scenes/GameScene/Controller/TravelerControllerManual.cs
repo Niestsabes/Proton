@@ -6,9 +6,11 @@ public class TravelerControllerManual : TravelerController
     public override IEnumerator Act()
     {
         // Mettre à jour la UI et les interactions
-        this.travelerObject.currentPlanet.SetPathsVisible(true);
-        this.travelerObject.currentPlanet.GetNeighborPlanets().ForEach(planet => {
-            planet.SetSelectable(true);
+        this.travelerObject.currentPlanet.listPathObject.ForEach(path => {
+            if (path.endPlanetObject != this.travelerObject.previousPlanet) {
+                path.SetVisible(true);
+                path.endPlanetObject.SetSelectable(true);
+            }
         });
 
         // Attendre que le joueur choisisse une planéte
@@ -22,7 +24,7 @@ public class TravelerControllerManual : TravelerController
         oldPlanet.GetNeighborPlanets().ForEach(planet => planet.SetSelectable(false));
 
         // Déplacer le joueur
-        GameSceneManager.instance.cameraController.MoveCameraToFollowTraveler(this.travelerObject);
+        GameSceneManager.instance.cameraController.FollowTraveler(this.travelerObject);
         yield return this.travelerObject.MoveToPlanet(planetObjSelect);
         GameSceneManager.instance.cameraController.StopFollow();
 

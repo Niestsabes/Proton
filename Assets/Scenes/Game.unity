@@ -416,10 +416,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   moveThreshold: {x: 0.15, y: 0.15}
-  moveTime: 1
+  boundLimit: {x: 4, y: 2}
+  moveTime: 0.2
   moveMagnitude: 1
   nominalOrthographicSize: 5
-  boundLimit: {x: 4, y: 2}
 --- !u!1001 &5426613180906320223
 PrefabInstance:
   m_ObjectHideFlags: 0

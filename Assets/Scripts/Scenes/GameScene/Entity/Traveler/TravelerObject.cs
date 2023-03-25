@@ -6,6 +6,7 @@ public class TravelerObject : MonoBehaviour
     [Header("Params")]
     public float moveSpeed;
     public GalaxyPlanetObject currentPlanet { get; protected set; }
+    public GalaxyPlanetObject previousPlanet { get; protected set; }
     public TravelerController controller { get; protected set; }
 
     /// <summary>
@@ -44,6 +45,7 @@ public class TravelerObject : MonoBehaviour
             this.transform.position = positions[i - 1];
         }
 
+        this.previousPlanet = this.currentPlanet;
         this.currentPlanet = targetPlanet;
         this.transform.position = targetPlanet.transform.position;
         yield return null;

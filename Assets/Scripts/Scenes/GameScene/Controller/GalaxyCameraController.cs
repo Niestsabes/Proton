@@ -79,11 +79,29 @@ public class GalaxyCameraController : MonoBehaviour
     }
 
     /// <summary>
+    /// Déplace la caméra vers une position
+    /// </summary>
+    /// <param name="position"></param>
+    public IEnumerator MoveToPosition(Vector3 targetPos)
+    {
+        Vector3 startPos = this.transform.position;
+        Vector3 endPos = new Vector3(targetPos.x, targetPos.y, this.transform.position.z);
+        float time = 0;
+        float timeRate;
+        while (time < this.moveTime) {
+            time += Time.deltaTime;
+            timeRate = Mathf.Min(1, time / this.moveTime);
+            this.transform.position = Vector3.Lerp(startPos, endPos, timeRate);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    /// <summary>
     /// Déplace la caméra pour suivre le Traveler
     /// </summary>
     /// <param name="traveler"></param>
     /// <returns></returns>
-    public void MoveCameraToFollowTraveler(TravelerObject traveler)
+    public void FollowTraveler(TravelerObject traveler)
     {
         StartCoroutine(this.FollowTransform(traveler.transform));
     }
