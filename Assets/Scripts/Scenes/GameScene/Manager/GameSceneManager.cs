@@ -32,6 +32,7 @@ public class GameSceneManager : MonoBehaviour
     // ===== Services
     public GameEventManager eventManager { get; private set; } = new GameEventManager();
     public GalaxyFactory galaxyFactory { get; private set; } = new GalaxyFactory();
+    public GalaxyRepository galaxyRepository { get; private set; } = new GalaxyRepository();
 
     void Awake()
     {
@@ -50,7 +51,7 @@ public class GameSceneManager : MonoBehaviour
 
     private void GenerateGalaxy()
     {
-        Galaxy galaxy = this.galaxyFactory.GenerateGalaxy(10);
+        Galaxy galaxy = this.galaxyFactory.GenerateGalaxyFromSerializable(this.galaxyRepository.GetById(1));
         this.galaxyObject = GalaxyObject.InstantiateObject(galaxy, this.galaxyPrefab);
     }
 
