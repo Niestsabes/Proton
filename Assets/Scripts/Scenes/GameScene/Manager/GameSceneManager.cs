@@ -103,9 +103,17 @@ public class GameSceneManager : MonoBehaviour
     {
         this.currentPhase = Phase.ENEMY;
         foreach (TravelerObject enemy in this.listEnemyTravelerObject) {
+            yield return this.cameraController.MoveToPosition(enemy.transform.position);
+            yield return new WaitForSeconds(0.5f);
             yield return enemy.controller.Act();
+            yield return new WaitForSeconds(0.2f);
         }
-        if (this.nbTurn % 5 == 1) { this.GenerateEnemyTraveler(); }
+        if (this.nbTurn % 5 == 1) {
+            yield return this.cameraController.MoveToPosition(this.startPlanetObject.transform.position);
+            yield return new WaitForSeconds(0.5f);
+            this.GenerateEnemyTraveler();
+            yield return new WaitForSeconds(1f);
+        }
         yield return null;
     }
 }

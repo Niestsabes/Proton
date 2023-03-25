@@ -31,7 +31,7 @@ public class GalaxyFactory
             Vector2 newPlanetPos;
             do {
                 retry++;
-                newPlanetPos = new Vector2(Random.value * 25, Random.value * 25);
+                newPlanetPos = new Vector2(Random.value * 40, Random.value * 22);
             } while (!this.IsPlanetLocationValid(newPlanetPos, listPlanetPos) && retry < PLANET_LOCATION_RETRY);
             listPlanet[i] = new GalaxyPlanet(newPlanetPos);
         }

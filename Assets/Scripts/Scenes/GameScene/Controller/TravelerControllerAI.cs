@@ -7,8 +7,8 @@ public class TravelerControllerAI : TravelerController
     public override IEnumerator Act()
     {
         GalaxyPlanetObject targetPlanet = CustomRandom.RandomInList(this.travelerObject.currentPlanet.GetNeighborPlanets());
-        
-        // Déplacer le joueur
+        GameSceneManager.instance.cameraController.FollowTraveler(this.travelerObject);
         yield return this.travelerObject.MoveToPlanet(targetPlanet);
+        GameSceneManager.instance.cameraController.StopFollow();
     }
 }
