@@ -33,6 +33,7 @@ public class GalaxyPathObject : MonoBehaviour
         instance.startPlanetObject = startPlanetObject;
         instance.endPlanetObject = endPlanetObject;
         instance.DrawLine(startPlanetObject.transform.position, endPlanetObject.transform.position);
+        instance.SetVisible(false);
         startPlanetObject.AttachPathObject(instance);
         return instance;
     }
@@ -54,6 +55,15 @@ public class GalaxyPathObject : MonoBehaviour
         this.lineRenderer.colorGradient = this.path.colorGradient;
     }
 
+    /// <summary>
+    /// Affiche ou cache le rendu du chemin reliant les planétes
+    /// </summary>
+    /// <param name="isVisible"></param>
+    public void SetVisible(bool isVisible)
+    {
+        this.lineRenderer.enabled = isVisible;
+    }
+
     private void AnimateLineOndulation()
     {
         int nbPoint = this.lineRenderer.positionCount;
@@ -70,5 +80,14 @@ public class GalaxyPathObject : MonoBehaviour
     {
         float waveOffset = Mathf.Sin(xLinePos * 2 * Mathf.PI);
         return Vector2.Lerp(start, end, xLinePos) + dir * waveOffset * this.waveMagnitude;
+    }
+
+    public Vector3[] positions
+    {
+        get {
+            Vector3[] output = new Vector3[this.lineRenderer.positionCount];
+            this.lineRenderer.GetPositions(output);
+            return output;
+        }
     }
 }

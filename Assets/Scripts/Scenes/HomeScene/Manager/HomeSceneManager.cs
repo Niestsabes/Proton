@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class HomeSceneManager : MonoBehaviour
+public class HomeSceneManager : AbstractSceneManager
 {
-    // Start is called before the first frame update
-    void Start()
+    public void NavigateToGame()
     {
-        
+        StartCoroutine(this.Navigate(SceneEnum.GAME));
     }
 
-    // Update is called once per frame
-    void Update()
+    public void NavigateToGallery()
     {
-        
+        StartCoroutine(this.Navigate(SceneEnum.GALLERY));
     }
+
+    public void NavigateToCredit()
+    {
+        StartCoroutine(this.Navigate(SceneEnum.CREDITS));
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    } 
 }

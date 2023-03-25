@@ -2,24 +2,118 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameSceneManager : MonoBehaviour
+public class GameSceneManager : AbstractSceneManager
 {
+    public enum Phase { PLAYER, ALLY, ENEMY, OTHER }
+
+    public static GameSceneManager instance
+    {
+        get { return GameSceneManager._instance; }
+    }
+    private static GameSceneManager _instance;
+    
+
     [Header("Prefabs")]
     [SerializeField] private GameObject galaxyPrefab;
+    [SerializeField] private GameObject travelerPrefab;
 
+    [Header("GameObjects")]
+    public GalaxyCameraController cameraController;
+
+    // ===== Game status
+    public Phase currentPhase { get; private set; } = GameSceneManager.Phase.OTHER;
+    public int nbTurn { get; private set; }
     private GalaxyObject galaxyObject;
-    private GalaxyFactory galaxyFactory = new GalaxyFactory();
+    private GalaxyPlanetObject startPlanetObject;
+    private TravelerObject playerTravelerObject;
+    private TravelerObject allyTravelerObject;
+    private List<TravelerObject> listEnemyTravelerObject;
 
-    // Start is called before the first frame update
+    // ===== Services
+    public GameEventManager eventManager { get; private set; } = new GameEventManager();
+    public GalaxyFactory galaxyFactory { get; private set; } = new GalaxyFactory();
+    public GalaxyRepository galaxyRepository { get; private set; } = new GalaxyRepository();
+
+    void Awake()
+    {
+        if (GameSceneManager.instance != null) { Destroy(GameSceneManager.instance); }
+        GameSceneManager._instance = this;
+    }
+
     void Start()
     {
-        Galaxy galaxy = this.galaxyFactory.GenerateGalaxy(10);
+        this.GenerateGalaxy();
+        this.GenerateTravelers();
+        this.cameraController.AttackGalaxyObject(this.galaxyObject);
+
+        StartCoroutine(this.RunGame());
+    }
+
+    private void GenerateGalaxy()
+    {
+        Galaxy galaxy = this.galaxyFactory.GenerateGalaxyFromSerializable(this.galaxyRepository.GetById(1));
         this.galaxyObject = GalaxyObject.InstantiateObject(galaxy, this.galaxyPrefab);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void GenerateTravelers()
     {
-        
+        this.startPlanetObject = CustomRandom.RandomInArray(this.galaxyObject.listPlanetObject);
+        this.playerTravelerObject = TravelerObject.InstantiateObject(this.travelerPrefab, this.startPlanetObject);
+        this.playerTravelerObject.AddController(false);
+        this.allyTravelerObject = TravelerObject.InstantiateObject(this.travelerPrefab, this.startPlanetObject);
+        this.allyTravelerObject.AddController(true);
+        this.listEnemyTravelerObject = new List<TravelerObject>();
+    }
+
+    private void GenerateEnemyTraveler()
+    {
+        TravelerObject newEnemy = TravelerObject.InstantiateObject(this.travelerPrefab, this.startPlanetObject);
+        newEnemy.AddController(true);
+        this.listEnemyTravelerObject.Add(newEnemy);
+    }
+
+    private IEnumerator RunGame()
+    {
+        this.nbTurn = 0;
+        while (true) {
+            this.nbTurn++;
+            yield return this.RunPlayerPhase();
+            yield return this.RunAllyPhase();
+            yield return this.RunEnemyPhase();
+        }
+    }
+
+    private IEnumerator RunPlayerPhase()
+    {
+        this.currentPhase = Phase.PLAYER;
+
+        var listPlanetToShow = this.playerTravelerObject.currentPlanet.GetNeighborPlanets();
+        listPlanetToShow.Add(this.playerTravelerObject.currentPlanet);
+        yield return this.cameraController.MoveCameraToBoundPlanets(listPlanetToShow);
+        yield return this.playerTravelerObject.controller.Act();
+    }
+
+    private IEnumerator RunAllyPhase()
+    {
+        this.currentPhase = Phase.ALLY;
+        yield return this.allyTravelerObject.controller.Act();
+    }
+
+    private IEnumerator RunEnemyPhase()
+    {
+        this.currentPhase = Phase.ENEMY;
+        foreach (TravelerObject enemy in this.listEnemyTravelerObject) {
+            yield return this.cameraController.MoveToPosition(enemy.transform.position);
+            yield return new WaitForSeconds(0.5f);
+            yield return enemy.controller.Act();
+            yield return new WaitForSeconds(0.2f);
+        }
+        if (this.nbTurn % 5 == 1) {
+            yield return this.cameraController.MoveToPosition(this.startPlanetObject.transform.position);
+            yield return new WaitForSeconds(0.5f);
+            this.GenerateEnemyTraveler();
+            yield return new WaitForSeconds(1f);
+        }
+        yield return null;
     }
 }
