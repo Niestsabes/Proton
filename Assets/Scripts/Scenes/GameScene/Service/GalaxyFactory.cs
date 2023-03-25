@@ -14,6 +14,13 @@ public class GalaxyFactory
         return new Galaxy(listPlanet, matrixPath);
     }
 
+    public Galaxy GenerateGalaxyFromSerializable(GalaxySerializable galaxySerial)
+    {
+        GalaxyPlanet[] listPlanet = this.GeneratePlanets(galaxySerial.listPlanet.Length);
+        GalaxyPath[,] matrixPath = this.GeneratePathsFromSerializable(galaxySerial, listPlanet);
+        return new Galaxy(listPlanet, matrixPath);
+    }
+
     public GalaxyPlanet[] GeneratePlanets(int nbPlanet)
     {
         List<Vector2> listPlanetPos = new List<Vector2>();
@@ -23,7 +30,7 @@ public class GalaxyFactory
             Vector2 newPlanetPos;
             do {
                 retry++;
-                newPlanetPos = new Vector2(Random.value * 15, Random.value * 15);
+                newPlanetPos = new Vector2(Random.value * 25, Random.value * 25);
             } while (!this.IsPlanetLocationValid(newPlanetPos, listPlanetPos) && retry < PLANET_LOCATION_RETRY);
             listPlanet[i] = new GalaxyPlanet(newPlanetPos);
         }
@@ -36,6 +43,17 @@ public class GalaxyFactory
         for (int startIdx = 0; startIdx < matrixPath.GetLength(0); startIdx++) {
             for (int endIdx = 0; endIdx < matrixPath.GetLength(1); endIdx++) {
                 if (Random.value > 0.5) matrixPath[startIdx, endIdx] = new GalaxyPath(listPlanet[startIdx], listPlanet[endIdx], this.RandomType());
+            }
+        }
+        return matrixPath;
+    }
+
+    public GalaxyPath[,] GeneratePathsFromSerializable(GalaxySerializable galaxySerial, GalaxyPlanet[] listPlanet)
+    {
+        GalaxyPath[,] matrixPath = new GalaxyPath[galaxySerial.listPlanet.Length, galaxySerial.listPlanet.Length];
+        for (int startIdx = 0; startIdx < matrixPath.GetLength(0); startIdx++) {
+            foreach (var pathSerial in galaxySerial.listPlanet[startIdx].listNeighborPlanet) {
+                matrixPath[startIdx, pathSerial.id] = new GalaxyPath(listPlanet[startIdx], listPlanet[pathSerial.id], (GalaxyPath.Type)(pathSerial.type));
             }
         }
         return matrixPath;
