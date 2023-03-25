@@ -1,0 +1,94 @@
+{
+    "name": "InputControl",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "a88d44fe-62b3-4218-950e-cb7164f97d69",
+            "actions": [
+                {
+                    "name": "IncAFactor",
+                    "type": "Button",
+                    "id": "00086b7d-d0de-4ba5-8e23-31830435a51e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DecAFactor",
+                    "type": "Button",
+                    "id": "c27ae0de-a3d6-49b0-8cd3-f0a13ff59069",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "IncBFactor",
+                    "type": "Button",
+                    "id": "ed5ea89e-ecc8-4d63-8b95-835b848c495b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DecBFactor",
+                    "type": "Button",
+                    "id": "5341d708-1d38-4096-b1e8-d08340a06d5e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "97ccbaab-231b-4c0f-8413-3bd9b08db688",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IncAFactor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f6398b1b-8ead-4333-b970-028ae6613ad0",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DecAFactor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9303b921-b139-46f7-a73d-9be0fb7227bc",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IncBFactor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "397f8951-e1a8-401c-87e7-1ecb16c4fb94",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DecBFactor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

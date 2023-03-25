@@ -18,18 +18,24 @@ public class CurveGenerator : MonoBehaviour
     {
         line1 =  transform.Find("Line1").GetComponent<LineRenderer>();
         line2 =  transform.Find("Line2").GetComponent<LineRenderer>();
-
-        GenCurve();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!isStatic)
-            GenCurve();
+            GenCurve(0.0f);
     }
 
-    private void GenCurve()
+    public void InitCurve(float maxRadius)
+    {
+        Start();
+        factorA = Random.Range(-50.0f, 50.0f);
+        factorB = Random.Range(-50.0f, 50.0f);
+        GenCurve(maxRadius);
+    }
+
+    private void GenCurve(float clampRadius)
     {
         var pt1 = new Vector3[curveSamplingCount * 2];
         var pt2 = new Vector3[curveSamplingCount * 2];
@@ -61,10 +67,32 @@ public class CurveGenerator : MonoBehaviour
         ptCnt1 = GenInverse(pt1, ptCnt1);
         ptCnt2 = GenInverse(pt2, ptCnt2);
 
-        line1.positionCount = ptCnt1;
-        line1.SetPositions(pt1);     
         line2.positionCount = ptCnt2;
         line2.SetPositions(pt2);     
+
+        if (clampRadius == 0.0f)
+        {
+            line1.positionCount = ptCnt1;
+            line1.SetPositions(pt1);     
+        }
+        else
+        {
+            var newPt = new Vector3[ptCnt1];
+
+            int start = 0;
+            int end = ptCnt1 - 1;
+            while (start < ptCnt1 && pt1[start].magnitude > clampRadius)
+                start++;
+            while (end > start && pt1[end].magnitude > clampRadius)
+                end--;
+            
+            int newPtCnt = 0;
+            for (int i = start; i <= end; ++i)
+                newPt[newPtCnt++] = pt1[i];
+
+            line1.positionCount = newPtCnt;
+            line1.SetPositions(newPt);
+        }
     }
 
     private int GenInverse(Vector3[] pts, int size)
