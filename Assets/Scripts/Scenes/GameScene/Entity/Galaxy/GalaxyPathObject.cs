@@ -81,4 +81,13 @@ public class GalaxyPathObject : MonoBehaviour
         float waveOffset = Mathf.Sin(xLinePos * 2 * Mathf.PI);
         return Vector2.Lerp(start, end, xLinePos) + dir * waveOffset * this.waveMagnitude;
     }
+
+    public Vector3[] positions
+    {
+        get {
+            Vector3[] output = new Vector3[this.lineRenderer.positionCount];
+            this.lineRenderer.GetPositions(output);
+            return output;
+        }
+    }
 }
