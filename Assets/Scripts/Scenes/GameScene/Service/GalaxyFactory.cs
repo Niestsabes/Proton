@@ -6,6 +6,7 @@ public class GalaxyFactory
 {
     private const int PLANET_LOCATION_RETRY = 20;
     private const float PLANET_MIN_SPACE = 1;
+    private const int NB_PATH_TYPE = 2;
 
     public Galaxy GenerateGalaxy(int nbPlanet)
     {
@@ -54,6 +55,7 @@ public class GalaxyFactory
         for (int startIdx = 0; startIdx < matrixPath.GetLength(0); startIdx++) {
             foreach (var pathSerial in galaxySerial.listPlanet[startIdx].listNeighborPlanet) {
                 matrixPath[startIdx, pathSerial.id] = new GalaxyPath(listPlanet[startIdx], listPlanet[pathSerial.id], (GalaxyPath.Type)(pathSerial.type));
+                matrixPath[pathSerial.id, startIdx] = new GalaxyPath(listPlanet[pathSerial.id], listPlanet[startIdx], (GalaxyPath.Type)(pathSerial.type + NB_PATH_TYPE));
             }
         }
         return matrixPath;
