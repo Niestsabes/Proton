@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.IO;
 
 public class GalaxyRepository
 {
     public GalaxySerializable GetById(int levelId)
     {
-        string content = this.ReadFile(this.GetFilePath(levelId));
-        GalaxySerializable galaxyData = JsonUtility.FromJson<GalaxySerializable>(content);
-        return galaxyData;
+        //string content = this.ReadFile(this.GetFilePath(levelId));
+        //GalaxySerializable galaxyData = JsonUtility.FromJson<GalaxySerializable>(content);
+        return GalaxyData.LEVEL_01;
     }
 
     private string GetFilePath(int levelId)

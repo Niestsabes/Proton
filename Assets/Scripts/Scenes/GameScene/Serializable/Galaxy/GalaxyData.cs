@@ -1,25 +1,70 @@
-using System;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
-[Serializable]
-public class GalaxySerializable
+public class GalaxyData
 {
-    public GalaxyPlanetSerializable[] listPlanet;
-}
+    public static GalaxySerializable LEVEL_01 = new GalaxySerializable() {
+        listPlanet = new GalaxyPlanetSerializable[] {
+            new GalaxyPlanetSerializable() { id = 0, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable(){ id = 19, type = 1}, new GalaxyPathSerializable() { id = 37, type = 0 } }},
+            new GalaxyPlanetSerializable() { id = 1, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 20, type = 1 }, new GalaxyPathSerializable() { id = 38, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 2, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 21, type = 1 }, new GalaxyPathSerializable() { id = 39, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 3, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 22, type = 1 }, new GalaxyPathSerializable() { id = 40, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 4, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 23, type = 1 }, new GalaxyPathSerializable() { id = 41, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 5, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 24, type = 1 }, new GalaxyPathSerializable() { id = 42, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 6, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 25, type = 1 }, new GalaxyPathSerializable() { id = 43, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 7, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 26, type = 1 }, new GalaxyPathSerializable() { id = 44, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 8, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 27, type = 1 }, new GalaxyPathSerializable() { id = 45, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 9, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 28, type = 1 }, new GalaxyPathSerializable() { id = 46, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 10, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 29, type = 1 }, new GalaxyPathSerializable() { id = 47, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 11, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 48, type = 0 }, new GalaxyPathSerializable() { id = 30, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 12, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 49, type = 0 }, new GalaxyPathSerializable() { id = 31, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 13, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 32, type = 1 }, new GalaxyPathSerializable() { id = 50, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 14, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 33, type = 1 }, new GalaxyPathSerializable() { id = 51, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 15, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 34, type = 1 }, new GalaxyPathSerializable() { id = 52, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 16, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 35, type = 1 }, new GalaxyPathSerializable() { id = 53, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 17, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 36, type = 1 }, new GalaxyPathSerializable() { id = 54, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 18, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 37, type = 1 }, new GalaxyPathSerializable() { id = 55, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 19, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 38, type = 1 }, new GalaxyPathSerializable() { id = 56, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 20, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 39, type = 1 }, new GalaxyPathSerializable() { id = 57, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 21, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 40, type = 1 }, new GalaxyPathSerializable() { id = 58, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 22, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 0, type = 0 }, new GalaxyPathSerializable() { id = 41, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 23, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 1, type = 0 }, new GalaxyPathSerializable() { id = 42, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 24, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 2, type = 0 }, new GalaxyPathSerializable() { id = 43, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 25, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 3, type = 0 }, new GalaxyPathSerializable() { id = 44, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 26, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 4, type = 0 }, new GalaxyPathSerializable() { id = 45, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 27, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 5, type = 0 }, new GalaxyPathSerializable() { id = 46, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 28, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 6, type = 0 }, new GalaxyPathSerializable() { id = 47, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 29, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 48, type = 1 }, new GalaxyPathSerializable() { id = 7, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 30, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 49, type = 1 }, new GalaxyPathSerializable() { id = 8, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 31, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 50, type = 1 }, new GalaxyPathSerializable() { id = 9, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 32, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 51, type = 1 }, new GalaxyPathSerializable() { id = 10, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 33, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 52, type = 1 }, new GalaxyPathSerializable() { id = 11, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 34, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 53, type = 1 }, new GalaxyPathSerializable() { id = 12, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 35, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 54, type = 1 }, new GalaxyPathSerializable() { id = 13, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 36, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 55, type = 1 }, new GalaxyPathSerializable() { id = 14, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 37, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 56, type = 1 }, new GalaxyPathSerializable() { id = 15, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 38, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 16, type = 0 }, new GalaxyPathSerializable() { id = 57, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 39, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 17, type = 0 }, new GalaxyPathSerializable() { id = 58, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 40, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 0, type = 1 }, new GalaxyPathSerializable() { id = 18, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 41, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 1, type = 1 }, new GalaxyPathSerializable() { id = 19, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 42, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 2, type = 1 }, new GalaxyPathSerializable() { id = 20, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 43, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 3, type = 1 }, new GalaxyPathSerializable() { id = 21, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 44, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 4, type = 1 }, new GalaxyPathSerializable() { id = 22, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 45, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 5, type = 1 }, new GalaxyPathSerializable() { id = 23, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 46, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 6, type = 1 }, new GalaxyPathSerializable() { id = 24, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 47, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 7, type = 1 }, new GalaxyPathSerializable() { id = 25, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 48, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 8, type = 1 }, new GalaxyPathSerializable() { id = 26, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 49, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 9, type = 1 }, new GalaxyPathSerializable() { id = 27, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 50, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 10, type = 1 }, new GalaxyPathSerializable() { id = 28, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 51, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 11, type = 1 }, new GalaxyPathSerializable() { id = 29, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 52, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 12, type = 1 }, new GalaxyPathSerializable() { id = 30, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 53, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 13, type = 1 }, new GalaxyPathSerializable() { id = 31, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 54, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 32, type = 0 }, new GalaxyPathSerializable() { id = 14, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 55, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 33, type = 0 }, new GalaxyPathSerializable() { id = 15, type = 1 } } },
+            new GalaxyPlanetSerializable() { id = 56, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 16, type = 1 }, new GalaxyPathSerializable() { id = 34, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 57, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 17, type = 1 }, new GalaxyPathSerializable() { id = 35, type = 0 } } },
+            new GalaxyPlanetSerializable() { id = 58, listNeighborPlanet = new GalaxyPathSerializable[] { new GalaxyPathSerializable() { id = 18, type = 1 }, new GalaxyPathSerializable() { id = 36, type = 0 } } }
 
-[Serializable]
-public class GalaxyPlanetSerializable
-{
-    public int id;
-    public GalaxyPathSerializable[] listNeighborPlanet;
-}
-
-[Serializable]
-public class GalaxyPathSerializable
-{
-    public int id;
-    public int type;
+        }
+    };
 }
