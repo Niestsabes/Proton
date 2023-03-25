@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameSceneManager : MonoBehaviour
+public class GameSceneManager : AbstractSceneManager
 {
     public enum Phase { PLAYER, ALLY, ENEMY, OTHER }
 

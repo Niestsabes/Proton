@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HomeSceneManager : MonoBehaviour
+public class HomeSceneManager : AbstractSceneManager
 {
     public void NavigateToGame()
     {
-        SceneManager.LoadScene((int)SceneEnum.GAME);
+        StartCoroutine(this.Navigate(SceneEnum.GAME));
     }
 
     public void NavigateToGallery()
     {
-        SceneManager.LoadScene((int)SceneEnum.GALLERY);
+        StartCoroutine(this.Navigate(SceneEnum.GALLERY));
     }
 
     public void NavigateToCredit()
     {
-        SceneManager.LoadScene((int)SceneEnum.CREDITS);
+        StartCoroutine(this.Navigate(SceneEnum.CREDITS));
     }
 
     public void QuitGame()
