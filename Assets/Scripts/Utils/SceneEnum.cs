@@ -4,5 +4,7 @@ using UnityEngine;
 public enum SceneEnum
 {
     HOME,
-    GAME
+    GAME,
+    GALLERY,
+    CREDITS
 }

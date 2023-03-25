@@ -10,9 +10,15 @@ public class HomeSceneManager : MonoBehaviour
         SceneManager.LoadScene((int)SceneEnum.GAME);
     }
 
-    public void NavigateToGallery() { }
+    public void NavigateToGallery()
+    {
+        SceneManager.LoadScene((int)SceneEnum.GALLERY);
+    }
 
-    public void NavigateToCredit() { }
+    public void NavigateToCredit()
+    {
+        SceneManager.LoadScene((int)SceneEnum.CREDITS);
+    }
 
     public void QuitGame()
     {
