@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   galaxyPrefab: {fileID: 5035907640493861238, guid: ab3e1d39bcbf8304bae536eb299973e0, type: 3}
+  travelerPrefab: {fileID: 1174808167351084361, guid: 43a017d0d2dfe5540828433469c9cdcc, type: 3}
   cameraController: {fileID: 1575065892}
 --- !u!114 &480139340
 MonoBehaviour:
@@ -228,7 +229,6 @@ GameObject:
   - component: {fileID: 817998195}
   - component: {fileID: 817998194}
   - component: {fileID: 817998193}
-  - component: {fileID: 817998197}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -317,18 +317,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &817998197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817998192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b3dfad3681ec749afd06e8272524fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1575065888
 GameObject:
   m_ObjectHideFlags: 0
