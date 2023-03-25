@@ -5,9 +5,9 @@ using UnityEngine;
 public class Galaxy
 {
     public GalaxyPlanet[] listPlanet { get; protected set; }
-    public GalaxyPath[][] matrixPath { get; protected set; }
+    public GalaxyPath[,] matrixPath { get; protected set; }
 
-    public Galaxy(GalaxyPlanet[] listPlanet, GalaxyPath[][] matrixPath)
+    public Galaxy(GalaxyPlanet[] listPlanet, GalaxyPath[,] matrixPath)
     {
         this.listPlanet = listPlanet;
         this.matrixPath = matrixPath;

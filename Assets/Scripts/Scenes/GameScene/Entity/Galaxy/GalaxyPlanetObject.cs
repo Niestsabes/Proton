@@ -12,9 +12,9 @@ public class GalaxyPlanetObject : MonoBehaviour
     /// <param name="planet"></param>
     /// <param name="prefab"></param>
     /// <returns></returns>
-    public static GalaxyPlanetObject InstantiateObject(GalaxyPlanet planet, GameObject prefab)
+    public static GalaxyPlanetObject InstantiateObject(GalaxyPlanet planet, GameObject prefab, Transform parent)
     {
-        GalaxyPlanetObject instance = GameObject.Instantiate(prefab).GetComponent<GalaxyPlanetObject>();
+        GalaxyPlanetObject instance = GameObject.Instantiate(prefab, planet.position, Quaternion.identity, parent).GetComponent<GalaxyPlanetObject>();
         if (instance == null) { throw new System.Exception("Pas de script GalaxyPlanetObject dans le prefab"); }
         instance.planet = planet;
         return instance;
