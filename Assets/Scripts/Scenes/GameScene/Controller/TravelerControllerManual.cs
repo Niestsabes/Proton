@@ -22,7 +22,9 @@ public class TravelerControllerManual : TravelerController
         oldPlanet.GetNeighborPlanets().ForEach(planet => planet.SetSelectable(false));
 
         // Déplacer le joueur
+        GameSceneManager.instance.cameraController.MoveCameraToFollowTraveler(this.travelerObject);
         yield return this.travelerObject.MoveToPlanet(planetObjSelect);
+        GameSceneManager.instance.cameraController.StopFollow();
 
         // Nettoyer la UI
         oldPlanet.SetPathsVisible(false);

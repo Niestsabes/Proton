@@ -18,7 +18,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameObject travelerPrefab;
 
     [Header("GameObjects")]
-    [SerializeField] private GalaxyCameraController cameraController;
+    public GalaxyCameraController cameraController;
 
     // ===== Game status
     public Phase currentPhase { get; private set; } = GameSceneManager.Phase.OTHER;
@@ -86,6 +86,10 @@ public class GameSceneManager : MonoBehaviour
     private IEnumerator RunPlayerPhase()
     {
         this.currentPhase = Phase.PLAYER;
+
+        var listPlanetToShow = this.playerTravelerObject.currentPlanet.GetNeighborPlanets();
+        listPlanetToShow.Add(this.playerTravelerObject.currentPlanet);
+        yield return this.cameraController.MoveCameraToBoundPlanets(listPlanetToShow);
         yield return this.playerTravelerObject.controller.Act();
     }
 
