@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HomeSceneManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void NavigateToGame()
     {
-        
+        SceneManager.LoadScene((int)SceneEnum.GAME);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void NavigateToGallery() { }
+
+    public void NavigateToCredit() { }
+
+    public void QuitGame()
     {
-        
-    }
+        Application.Quit();
+    } 
 }
