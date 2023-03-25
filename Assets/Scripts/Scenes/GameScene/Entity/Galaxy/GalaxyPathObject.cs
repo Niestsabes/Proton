@@ -51,6 +51,7 @@ public class GalaxyPathObject : MonoBehaviour
         }
         this.lineRenderer.positionCount = nbPoint;
         this.lineRenderer.SetPositions(listPoint);
+        this.lineRenderer.colorGradient = this.path.colorGradient;
     }
 
     private void AnimateLineOndulation()
