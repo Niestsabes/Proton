@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planetPrefab: {fileID: 5424980823091320582, guid: 082defd6c66102c4f9ee16262d8b9a85, type: 3}
+  pathPrefab: {fileID: 4546802610023098606, guid: 8e050951d0c932b4c93a74a2ad40a802, type: 3}

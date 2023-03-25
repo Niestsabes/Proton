@@ -23,6 +23,11 @@ public class GalaxyFactory
     public GalaxyPath[,] GeneratePaths(GalaxyPlanet[] listPlanet)
     {
         GalaxyPath[,] matrixPath = new GalaxyPath[listPlanet.Length, listPlanet.Length];
+        for (int startIdx = 0; startIdx < matrixPath.GetLength(0); startIdx++) {
+            for (int endIdx = 0; endIdx < matrixPath.GetLength(1); endIdx++) {
+                if (Random.value > 0.5) matrixPath[startIdx, endIdx] = new GalaxyPath(listPlanet[startIdx], listPlanet[endIdx]);
+            }
+        }
         return matrixPath;
     }
 }
