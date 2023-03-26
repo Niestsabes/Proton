@@ -4,8 +4,27 @@ using UnityEngine;
 
 public class DeviceUI : MonoBehaviour
 {
-    public void Open(List<GalaxyPlanetObject> listPlanet) {
-        if (!this.gameObject.activeInHierarchy) this.gameObject.SetActive(true);
+    private CurvedPlanetManager curveMgr;
+
+    void Start()
+    {
+         //curveMgr = ;
+    }
+
+    public void Open(List<GalaxyPathObject> listPath) {
+        if (!this.gameObject.activeInHierarchy)
+        {
+            int[] planetIds = new int[3];
+            List<GalaxyPlanetObject> planets = new List<GalaxyPlanetObject>();
+            for (int i = 0; i < 3; ++i)
+            {
+                planetIds[i] = (int)listPath[i].path.type;
+                planets.Add(listPath[i].endPlanetObject);
+            }
+
+            this.gameObject.SetActive(true);
+            GameObject.Find("CurvedPlanetManager").GetComponent<CurvedPlanetManager>().Redraw(planetIds, planets);
+        }
     }
 
     public void Close()

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetPrefab: {fileID: 1861242882135724504, guid: 9dbc22a555d3fac4590ce9649b7fe74f, type: 3}
   texturePrefabs:
-  - {fileID: 76154058173911625, guid: 17cff0ad86d66c94caf6f0fa26c74e04, type: 3}
   - {fileID: 76154058173911625, guid: 7abe60df764af014bb8a0db935101b79, type: 3}
-  - {fileID: 76154058173911625, guid: 2cfe2817b06cb1844a0194324bfdfbbe, type: 3}
+  - {fileID: 76154058173911625, guid: 17cff0ad86d66c94caf6f0fa26c74e04, type: 3}
   - {fileID: 76154058173911625, guid: 8c241c12ed4e2c949bddf219e2a28f8f, type: 3}
+  - {fileID: 76154058173911625, guid: 2cfe2817b06cb1844a0194324bfdfbbe, type: 3}

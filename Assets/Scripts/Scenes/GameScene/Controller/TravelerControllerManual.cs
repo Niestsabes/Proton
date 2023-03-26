@@ -22,9 +22,11 @@ public class TravelerControllerManual : TravelerController
 
         // Attendre que le joueur choisisse une planéte
         GalaxyPlanetObject planetObjSelect = null;
-        // GameSceneManager.instance.eventManager.onDeviceWin.AddListener(planetObj => { planetObjSelect = planetObj; });
-        GameSceneManager.instance.eventManager.planetSelect.AddListener(planetObj => { planetObjSelect = planetObj; });
+        GameSceneManager.instance.eventManager.onDeviceWin.AddListener(planetObj => { planetObjSelect = planetObj; });
         yield return new WaitUntil(() => planetObjSelect != null);
+
+        // remove device view
+        GameSceneManager.instance.deviceUI.Close();
 
         // Désactiver les interactions
         GalaxyPlanetObject oldPlanet = this.travelerObject.currentPlanet;
@@ -49,7 +51,7 @@ public class TravelerControllerManual : TravelerController
     {
         this.isListeningInput = true;
         while(this.isListeningInput && this.isActing) {
-            if (Input.GetKey(KeyCode.Space)) { GameSceneManager.instance.deviceUI.Open(this.listAccessiblePath.Select(path => path.endPlanetObject).ToList()); }
+            if (Input.GetKey(KeyCode.Return)) { GameSceneManager.instance.deviceUI.Open(this.listAccessiblePath); }
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) { GameSceneManager.instance.deviceUI.Close(); }
             yield return new WaitForEndOfFrame();
         }
