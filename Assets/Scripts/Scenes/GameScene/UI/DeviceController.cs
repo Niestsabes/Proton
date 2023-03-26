@@ -59,8 +59,8 @@ public class DeviceController : MonoBehaviour
         if (!Mathf.Approximately(curve.factorB, oldFactor))
             knobB.transform.Rotate(0, 0, tKnob * dir[1], Space.Self);
 
-        int nearestIdx = 0;
-        float dist = curveMgr.GetDistFromNearestCurve(curve.factorA, curve.factorB, ref nearestIdx);
+        GalaxyPlanetObject destPlanet = null;
+        float dist = curveMgr.GetDistFromNearestCurve(curve.factorA, curve.factorB, ref destPlanet);
 
         float clampedDist = Mathf.Clamp(dist, winThreshold, startFadeThreshold);
         float fadeRatio = (clampedDist - winThreshold) / (startFadeThreshold - winThreshold);
@@ -72,8 +72,7 @@ public class DeviceController : MonoBehaviour
             foundNote.volume = 1.0f;
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("you win! " + dist + " " + nearestIdx);
-                GameSceneManager.instance.eventManager.onDeviceWin.Invoke(nearestIdx, dist);
+                GameSceneManager.instance.eventManager.onDeviceWin.Invoke(destPlanet);
             }
         }
         else

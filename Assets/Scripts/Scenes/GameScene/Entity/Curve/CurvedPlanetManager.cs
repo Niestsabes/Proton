@@ -9,11 +9,11 @@ public class CurvedPlanetManager : MonoBehaviour
 
     private List<GameObject> planets = new List<GameObject>();
     private List<CurveGenerator> curves = new List<CurveGenerator>();
+    private List<GalaxyPlanetObject> planetDests = new List<GalaxyPlanetObject>();
 
     // Start is called before the first frame update
     void Start()
     {
-        Redraw();
     }
 
     // Update is called once per frame
@@ -22,12 +22,13 @@ public class CurvedPlanetManager : MonoBehaviour
         
     }
 
-    public void Redraw()
+    public void Redraw(int[] _planetIds, List<GalaxyPlanetObject> _planets)
     {
         foreach (var planet in planets)
             Destroy(planet);
         planets.Clear();
         curves.Clear();
+        planetDests = _planets;
 
         Vector3[] pos = {   new Vector3 { x = -1f, y = -2f, z = 0 }, 
                             new Vector3 { x = 2.5f, y = 2f, z = 0 }, 
@@ -40,8 +41,8 @@ public class CurvedPlanetManager : MonoBehaviour
             var curve = newPlanet.transform.Find("Curve").GetComponent<CurveGenerator>();
             // texture.GetComponent<SpriteRenderer>().sortingLayerName = "Device";
             curves.Add(curve);
-            curve.InitCurve(20.0f);
-            int textureIdx = i; // TODO
+            curve.InitCurve(15.0f);
+            int textureIdx = _planetIds[i];
             GameObject texture = (GameObject)Instantiate(texturePrefabs[i], Vector3.zero, Quaternion.identity);
             texture.transform.parent = newPlanet.transform;
             texture.transform.localPosition = Vector3.zero;
@@ -54,7 +55,7 @@ public class CurvedPlanetManager : MonoBehaviour
         }
     }
 
-    public float GetDistFromNearestCurve(float factorA, float factorB, ref int outNearestIdx)
+    public float GetDistFromNearestCurve(float factorA, float factorB, ref GalaxyPlanetObject destPlanet)
     {
         float minDist = 100000000.0f;
         for (int i = 0; i < curves.Count; ++i)
@@ -64,16 +65,11 @@ public class CurvedPlanetManager : MonoBehaviour
             float maxCurDist = Mathf.Max(curDistA, curDistB);
             if (maxCurDist < minDist)
             {
-                outNearestIdx = i;
+                destPlanet = planetDests[i];
                 minDist = maxCurDist;
             }
         }
 
         return minDist;
-    }
-
-    void OnEnable()
-    {
-        Redraw();
     }
 }
