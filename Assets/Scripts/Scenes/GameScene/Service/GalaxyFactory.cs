@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GalaxyFactory
 {
-    private const int PLANET_LOCATION_RETRY = 20;
+    private const int PLANET_LOCATION_RETRY = 50;
     private const float PLANET_MIN_SPACE = 1;
     private const int NB_PATH_TYPE = 2;
 
@@ -29,11 +29,16 @@ public class GalaxyFactory
         for (int i = 0; i < nbPlanet; i++) {
             int retry = 0;
             Vector2 newPlanetPos;
+            float angle, radius;
             do {
                 retry++;
-                newPlanetPos = new Vector2(Random.value * 40, Random.value * 22);
+                angle = Mathf.PI * 2 * Random.value;
+                radius = Random.value * 18 + 5;
+                newPlanetPos = new Vector2(radius * Mathf.Cos(angle) * 1.6f, radius * Mathf.Sin(angle) * 0.9f);
             } while (!this.IsPlanetLocationValid(newPlanetPos, listPlanetPos) && retry < PLANET_LOCATION_RETRY);
             listPlanet[i] = new GalaxyPlanet(newPlanetPos);
+            listPlanet[i].SetOrbitParam(radius, angle, 1.6f, 0.9f);
+            listPlanetPos.Add(newPlanetPos);
         }
         return listPlanet;
     }
@@ -64,7 +69,7 @@ public class GalaxyFactory
     private bool IsPlanetLocationValid(Vector2 newLocation, List<Vector2> listPreviousLocations)
     {
         foreach (Vector2 prevLocation in listPreviousLocations) {
-            if ((prevLocation - newLocation).magnitude <= PLANET_MIN_SPACE) return false;
+            if ((prevLocation - newLocation).magnitude <= 1.6f + PLANET_MIN_SPACE) return false;
         }
         return true;
     }
