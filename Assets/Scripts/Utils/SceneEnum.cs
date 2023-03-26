@@ -6,5 +6,7 @@ public enum SceneEnum
     HOME,
     GAME,
     GALLERY,
-    CREDITS
+    CREDITS,
+    GAME_OVER,
+    GAME_WIN
 }

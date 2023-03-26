@@ -6,6 +6,7 @@ using System.Linq;
 public class GameSceneManager : AbstractSceneManager
 {
     public enum Phase { PLAYER, ALLY, ENEMY, OTHER }
+    public enum Status { PLAYING, WIN, LOSE }
 
     public static GameSceneManager instance
     {
@@ -25,12 +26,13 @@ public class GameSceneManager : AbstractSceneManager
     public TransitionFlashCanvas flashUI;
 
     [Header("Params")]
-    public int nbEnemyOnStart = 2;
+    public int nbEnemyOnStart = 3;
     public int nbTurnBeforeEnemySpawn = 2;
     public int nbTurnBeforeSwap = 3;
 
     // ===== Game status
     public Phase currentPhase { get; private set; } = GameSceneManager.Phase.OTHER;
+    public Status currentStatus { get; private set; } = GameSceneManager.Status.PLAYING;
     public int nbTurn { get; private set; }
     private GalaxyObject galaxyObject;
     private GalaxyPlanetObject startPlanetObject;
@@ -103,14 +105,23 @@ public class GameSceneManager : AbstractSceneManager
             listPlanetEligible.Remove(planet);
         }
 
-        // Bloque de jeu
-        while (true) {
+        // Boucle de jeu
+        while (this.currentStatus == Status.PLAYING) {
             this.nbTurn++;
             yield return this.RunPlayerPhase();
+            yield return this.CheckGameOver();
+            if (this.currentStatus != Status.PLAYING) { break; }
             yield return this.RunAllyPhase();
+            yield return this.CheckGameOver();
+            if (this.currentStatus != Status.PLAYING) { break; }
             yield return this.RunEnemyPhase();
+            yield return this.CheckGameOver();
+            if (this.currentStatus != Status.PLAYING) { break; }
             if (this.nbTurn == this.nbTurnBeforeSwap) yield return this.RunSwapPhase();
         }
+
+        if (this.currentStatus == Status.LOSE) this.NavigateToGameOver();
+        else this.NavigateToWin();
     }
 
     private IEnumerator RunPlayerPhase()
@@ -155,5 +166,28 @@ public class GameSceneManager : AbstractSceneManager
         yield return this.allyTravelerObject.TeleportToPlanet(this.playerTravelerObject.currentPlanet);
         yield return this.playerTravelerObject.TeleportToPlanet(allyPlanet);
         yield return null;
+    }
+
+    private IEnumerator CheckGameOver()
+    {
+        // Détecter si le joueur est sur la même planète qu'un ennemi
+        foreach (var enemy in this.listEnemyTravelerObject) {
+            if (enemy.currentPlanet == this.playerTravelerObject.currentPlanet) {
+                this.flashUI.SetColor(TransitionFlashCanvas.DANGER);
+                yield return this.flashUI.Animate();
+                this.currentStatus = Status.LOSE;
+                break;
+            }
+        }
+    }
+
+    private void NavigateToGameOver()
+    {
+        StartCoroutine(this.Navigate(SceneEnum.GAME_OVER));
+    }
+
+    private void NavigateToWin()
+    {
+        StartCoroutine(this.Navigate(SceneEnum.GAME_WIN));
     }
 }
