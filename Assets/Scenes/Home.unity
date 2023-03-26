@@ -1817,7 +1817,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: JOuer
+  m_text: Jouer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 62aae004cc92c8f4bac36df9731e5c2a, type: 2}
   m_sharedMaterial: {fileID: 8136810684315643527, guid: 62aae004cc92c8f4bac36df9731e5c2a, type: 2}

@@ -7,7 +7,7 @@ public class HomeSceneManager : AbstractSceneManager
 {
     public void NavigateToGame()
     {
-        StartCoroutine(this.Navigate(SceneEnum.GAME));
+        StartCoroutine(this.Navigate(SceneEnum.GAME_INTRO));
     }
 
     public void NavigateToGallery()
