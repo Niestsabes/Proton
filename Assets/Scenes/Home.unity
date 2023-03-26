@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Galerie
+  m_text: ???
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 62aae004cc92c8f4bac36df9731e5c2a, type: 2}
   m_sharedMaterial: {fileID: 8136810684315643527, guid: 62aae004cc92c8f4bac36df9731e5c2a, type: 2}
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 239322804}
   - component: {fileID: 239322803}
   m_Layer: 5
-  m_Name: Galery Button
+  m_Name: Gallery Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 239322804}
   m_OnClick:
     m_PersistentCalls:
