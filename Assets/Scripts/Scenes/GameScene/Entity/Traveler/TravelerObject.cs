@@ -1,13 +1,21 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TravelerObject : MonoBehaviour
 {
+    [Header("Prefabs")]
+    public List<Sprite> listTravelerBodySprite;
+
     [Header("Params")]
     public float moveSpeed;
+    public SpriteRenderer iconRenderer;
+    public SpriteRenderer bodyRenderer;
     public GalaxyPlanetObject currentPlanet { get; protected set; }
     public GalaxyPlanetObject previousPlanet { get; protected set; }
     public TravelerController controller { get; protected set; }
+    public bool isVisible { get; protected set; } = true;
+    public int idxBody { get; protected set; } = 0;
 
     /// <summary>
     /// Crée un nouvel objet TravelerObject
@@ -35,22 +43,45 @@ public class TravelerObject : MonoBehaviour
         this.transform.SetParent(null);
         GalaxyPathObject path = this.currentPlanet.listPathObject.Find(path => path.endPlanetObject == targetPlanet);
         if (path == null) { throw new System.Exception("Le personage ne peut pas aller sur cette planéte!"); }
-        Vector3[] positions = path.positions;
-        for (int i = 1; i < positions.Length; i++) {
-            float time = 0;
-            float maxTime = (positions[i] - positions[i - 1]).magnitude / this.moveSpeed;
-            while (time < maxTime) {
-                time += Time.deltaTime;
-                this.transform.position = Vector3.Lerp(positions[i - 1], positions[i], time / maxTime);
-                yield return new WaitForFixedUpdate();
-            }
-            this.transform.position = positions[i - 1];
+        float time = 0;
+        Vector2 startPos = this.transform.position;
+        float maxTime = (targetPlanet.transform.position - this.transform.position).magnitude / this.moveSpeed;
+        while (time < maxTime) {
+            time += Time.deltaTime;
+            this.transform.position = Vector3.Lerp(startPos, targetPlanet.transform.position, time / maxTime);
+            yield return new WaitForFixedUpdate();
         }
+        this.transform.position = targetPlanet.transform.position;
 
         this.previousPlanet = this.currentPlanet;
         this.currentPlanet = targetPlanet;
         this.transform.SetParent(this.currentPlanet.transform);
         this.transform.position = targetPlanet.transform.position;
         yield return null;
+    }
+
+    public IEnumerator TeleportToPlanet(GalaxyPlanetObject targetPlanet)
+    {
+        this.transform.SetParent(null);
+        this.previousPlanet = this.currentPlanet;
+        this.currentPlanet = targetPlanet;
+        this.transform.SetParent(this.currentPlanet.transform);
+        this.transform.position = targetPlanet.transform.position;
+        yield return null;
+    }
+
+    // ===== Getter / Setter
+
+    public void SetVisible(bool isVisible)
+    {
+        this.isVisible = isVisible;
+        this.iconRenderer.gameObject.SetActive(isVisible);
+        this.bodyRenderer.gameObject.SetActive(isVisible);
+    }
+
+    public void SetBody(int idx)
+    {
+        this.bodyRenderer.sprite = this.listTravelerBodySprite[idx];
+        this.idxBody = idx;
     }
 }

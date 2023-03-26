@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class GalaxyCameraController : MonoBehaviour
 {
     [Header("Params")]
+    [SerializeField] private float orthoSizeMax = 22;
+    [SerializeField] private float orthoSizeMin = 5;
     [SerializeField] private float moveSpeed;
     [SerializeField] private Vector2 moveThreshold;
     [SerializeField] private Vector2 boundLimit;
@@ -23,6 +25,13 @@ public class GalaxyCameraController : MonoBehaviour
             this.boundPlanet.Encapsulate(planet.transform.position);
         }
         this.transform.position = new Vector3(this.boundPlanet.center.x, this.boundPlanet.center.y, this.transform.position.z);
+    }
+
+    public IEnumerator ResetCamera()
+    {
+        yield return this.MoveToPosition(Vector3.zero);
+        Camera.main.orthographicSize = this.orthoSizeMax;
+
     }
 
     /// <summary>
@@ -62,16 +71,16 @@ public class GalaxyCameraController : MonoBehaviour
     /// <param name="position"></param>
     public IEnumerator MoveToPosition(Vector3 targetPos)
     {
-        //Vector3 startPos = this.transform.position;
-        //Vector3 endPos = new Vector3(targetPos.x, targetPos.y, this.transform.position.z);
-        //float time = 0;
-        //float timeRate;
-        //while (time < this.moveTime) {
-        //    time += Time.deltaTime;
-        //    timeRate = Mathf.Min(1, time / this.moveTime);
-        //    this.transform.position = Vector3.Lerp(startPos, endPos, timeRate);
-        //    yield return new WaitForFixedUpdate();
-        //}
+        Vector3 startPos = this.transform.position;
+        Vector3 endPos = new Vector3(targetPos.x, targetPos.y, this.transform.position.z);
+        float time = 0;
+        float timeRate;
+        while (time < this.moveTime) {
+            time += Time.deltaTime;
+            timeRate = Mathf.Min(1, time / this.moveTime);
+            this.transform.position = Vector3.Lerp(startPos, endPos, timeRate);
+            yield return new WaitForFixedUpdate();
+        }
         yield return null;
     }
 
@@ -88,18 +97,19 @@ public class GalaxyCameraController : MonoBehaviour
     public void StopFollow()
     {
         this.followedTransform = null;
+        Camera.main.orthographicSize = this.orthoSizeMax;
     }
 
     private IEnumerator FollowTransform(Transform transform)
     {
-        //this.followedTransform = transform;
-        //while (this.followedTransform == transform) {
-        //    Vector2 dir = this.followedTransform.position - this.transform.position;
-        //    if (dir.magnitude > this.moveMagnitude) dir = dir / dir.magnitude * this.moveMagnitude;
-        //    this.transform.Translate(dir);
-        //    // if (Camera.main.orthographicSize > this.nominalOrthographicSize) Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize - Time.deltaTime * 3, this.nominalOrthographicSize);
-        //    yield return new WaitForFixedUpdate();
-        //}
+        this.followedTransform = transform;
+        Camera.main.orthographicSize = 10;
+        while (this.followedTransform == transform) {
+            Vector2 dir = this.followedTransform.position - this.transform.position;
+            if (dir.magnitude > this.moveMagnitude) dir = dir / dir.magnitude * this.moveMagnitude;
+            this.transform.Translate(dir);
+            yield return new WaitForFixedUpdate();
+        }
         yield return null;
     }
 }

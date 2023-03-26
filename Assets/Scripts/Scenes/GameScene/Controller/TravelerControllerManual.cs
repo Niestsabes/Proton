@@ -23,10 +23,12 @@ public class TravelerControllerManual : TravelerController
         // Attendre que le joueur choisisse une planéte
         GalaxyPlanetObject planetObjSelect = null;
         // GameSceneManager.instance.eventManager.onDeviceWin.AddListener(planetObj => { planetObjSelect = planetObj; });
+        GameSceneManager.instance.eventManager.planetSelect.AddListener(planetObj => { planetObjSelect = planetObj; });
         yield return new WaitUntil(() => planetObjSelect != null);
 
         // Désactiver les interactions
         GalaxyPlanetObject oldPlanet = this.travelerObject.currentPlanet;
+        // GameSceneManager.instance.eventManager.onDeviceWin.RemoveAllListeners();
         GameSceneManager.instance.eventManager.planetSelect.RemoveAllListeners();
         oldPlanet.GetNeighborPlanets().ForEach(planet => planet.SetSelectable(false));
 

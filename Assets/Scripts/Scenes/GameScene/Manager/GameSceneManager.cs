@@ -16,10 +16,15 @@ public class GameSceneManager : AbstractSceneManager
     [Header("Prefabs")]
     [SerializeField] private GameObject galaxyPrefab;
     [SerializeField] private GameObject travelerPrefab;
+    [SerializeField] private GameObject enemyTravelerPrefab;
 
     [Header("GameObjects")]
     public GalaxyCameraController cameraController;
     public DeviceUI deviceUI;
+
+    [Header("Params")]
+    public int nbTurnBeforeEnemySpawn = 2;
+    public int nbTurnBeforeSwap = 3;
 
     // ===== Game status
     public Phase currentPhase { get; private set; } = GameSceneManager.Phase.OTHER;
@@ -62,14 +67,17 @@ public class GameSceneManager : AbstractSceneManager
         this.startPlanetObject = CustomRandom.RandomInArray(this.galaxyObject.listPlanetObject);
         this.playerTravelerObject = TravelerObject.InstantiateObject(this.travelerPrefab, this.startPlanetObject);
         this.playerTravelerObject.AddController(false);
+        this.playerTravelerObject.SetBody(0);
         this.allyTravelerObject = TravelerObject.InstantiateObject(this.travelerPrefab, this.startPlanetObject);
         this.allyTravelerObject.AddController(true);
+        this.allyTravelerObject.SetBody(1);
+        this.allyTravelerObject.SetVisible(false);
         this.listEnemyTravelerObject = new List<TravelerObject>();
     }
 
     private void GenerateEnemyTraveler()
     {
-        TravelerObject newEnemy = TravelerObject.InstantiateObject(this.travelerPrefab, this.startPlanetObject);
+        TravelerObject newEnemy = TravelerObject.InstantiateObject(this.enemyTravelerPrefab, this.startPlanetObject);
         newEnemy.AddController(true);
         this.listEnemyTravelerObject.Add(newEnemy);
     }
@@ -87,6 +95,7 @@ public class GameSceneManager : AbstractSceneManager
             yield return this.RunPlayerPhase();
             yield return this.RunAllyPhase();
             yield return this.RunEnemyPhase();
+            if (this.nbTurn == this.nbTurnBeforeSwap) yield return this.RunSwapPhase();
         }
     }
 
@@ -94,6 +103,7 @@ public class GameSceneManager : AbstractSceneManager
     {
         this.currentPhase = Phase.PLAYER;
 
+        yield return this.cameraController.ResetCamera();
         var listPlanetToShow = this.playerTravelerObject.currentPlanet.GetNeighborPlanets();
         listPlanetToShow.Add(this.playerTravelerObject.currentPlanet);
         yield return this.cameraController.MoveCameraToBoundPlanets(listPlanetToShow);
@@ -115,12 +125,17 @@ public class GameSceneManager : AbstractSceneManager
             yield return enemy.controller.Act();
             yield return new WaitForSeconds(0.2f);
         }
-        if (this.nbTurn % 5 == 1) {
+        if (this.nbTurn % this.nbTurnBeforeEnemySpawn == 1) {
             yield return this.cameraController.MoveToPosition(this.startPlanetObject.transform.position);
             yield return new WaitForSeconds(0.5f);
             this.GenerateEnemyTraveler();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.2f);
         }
+        yield return new WaitForSeconds(0.5f); ;
+    }
+
+    private IEnumerator RunSwapPhase()
+    {
         yield return null;
     }
 }
