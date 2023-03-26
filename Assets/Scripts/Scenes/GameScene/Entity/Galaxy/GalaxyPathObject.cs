@@ -15,6 +15,7 @@ public class GalaxyPathObject : MonoBehaviour
     public GalaxyPlanetObject endPlanetObject { get; protected set; }
 
     public bool isVisible { get; protected set; }
+    private int nbPoint = 0;
 
     void Update()
     {
@@ -47,7 +48,8 @@ public class GalaxyPathObject : MonoBehaviour
     /// <param name="endPos"></param>
     public void DrawLine(Vector3 startPos, Vector3 endPos)
     {
-        int nbPoint = Mathf.CeilToInt((endPos - startPos).magnitude * this.nbPointPerUnit) + 2;
+        if (this.nbPoint == 0)
+            this.nbPoint = Mathf.CeilToInt((endPos - startPos).magnitude * this.nbPointPerUnit) + 2;
         Vector3[] listPoint = new Vector3[nbPoint];
         for (int i = 0; i < nbPoint; i++) {
             listPoint[i] = Vector3.Lerp(startPos, endPos, (float)(i) / (nbPoint - 1));
