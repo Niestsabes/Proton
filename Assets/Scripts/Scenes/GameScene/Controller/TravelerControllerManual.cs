@@ -51,7 +51,7 @@ public class TravelerControllerManual : TravelerController
     {
         this.isListeningInput = true;
         while(this.isListeningInput && this.isActing) {
-            if (Input.GetKey(KeyCode.F)) { GameSceneManager.instance.deviceUI.Open(this.listAccessiblePath); }
+            if (Input.GetKey(KeyCode.Return)) { GameSceneManager.instance.deviceUI.Open(this.listAccessiblePath); }
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) { GameSceneManager.instance.deviceUI.Close(); }
             yield return new WaitForEndOfFrame();
         }

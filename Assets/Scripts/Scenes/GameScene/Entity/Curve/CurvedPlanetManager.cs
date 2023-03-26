@@ -41,9 +41,9 @@ public class CurvedPlanetManager : MonoBehaviour
             var curve = newPlanet.transform.Find("Curve").GetComponent<CurveGenerator>();
             // texture.GetComponent<SpriteRenderer>().sortingLayerName = "Device";
             curves.Add(curve);
-            curve.InitCurve(15.0f);
+            curve.InitCurve(20.0f);
             int textureIdx = _planetIds[i];
-            GameObject texture = (GameObject)Instantiate(texturePrefabs[i], Vector3.zero, Quaternion.identity);
+            GameObject texture = (GameObject)Instantiate(texturePrefabs[textureIdx], Vector3.zero, Quaternion.identity);
             texture.transform.parent = newPlanet.transform;
             texture.transform.localPosition = Vector3.zero;
             texture.GetComponent<SpriteRenderer>().sortingLayerName = "Device";

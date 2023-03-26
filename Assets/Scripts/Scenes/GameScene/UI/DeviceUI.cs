@@ -16,7 +16,6 @@ public class DeviceUI : MonoBehaviour
         {
             int[] planetIds = new int[3];
             List<GalaxyPlanetObject> planets = new List<GalaxyPlanetObject>();
-            Debug.Log(listPath.Count);
             for (int i = 0; i < 3; ++i)
             {
                 planetIds[i] = (int)listPath[i].path.type;
