@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameSceneManager : AbstractSceneManager
 {
@@ -21,8 +22,10 @@ public class GameSceneManager : AbstractSceneManager
     [Header("GameObjects")]
     public GalaxyCameraController cameraController;
     public DeviceUI deviceUI;
+    public TransitionFlashCanvas flashUI;
 
     [Header("Params")]
+    public int nbEnemyOnStart = 2;
     public int nbTurnBeforeEnemySpawn = 2;
     public int nbTurnBeforeSwap = 3;
 
@@ -75,9 +78,9 @@ public class GameSceneManager : AbstractSceneManager
         this.listEnemyTravelerObject = new List<TravelerObject>();
     }
 
-    private void GenerateEnemyTraveler()
+    private void GenerateEnemyTraveler(GalaxyPlanetObject planet)
     {
-        TravelerObject newEnemy = TravelerObject.InstantiateObject(this.enemyTravelerPrefab, this.startPlanetObject);
+        TravelerObject newEnemy = TravelerObject.InstantiateObject(this.enemyTravelerPrefab, planet);
         newEnemy.AddController(true);
         this.listEnemyTravelerObject.Add(newEnemy);
     }
@@ -90,6 +93,17 @@ public class GameSceneManager : AbstractSceneManager
     private IEnumerator RunGame()
     {
         this.nbTurn = 0;
+
+        // Invoquer les enemies de base
+        var listPlanetEligible = this.galaxyObject.listPlanetObject.Where(planetObj => planetObj != this.startPlanetObject).ToList();
+        for (int i = 0; i < this.nbEnemyOnStart; i++) {
+            if (listPlanetEligible.Count == 0) { break; }
+            var planet = CustomRandom.RandomInList(listPlanetEligible);
+            this.GenerateEnemyTraveler(planet);
+            listPlanetEligible.Remove(planet);
+        }
+
+        // Bloque de jeu
         while (true) {
             this.nbTurn++;
             yield return this.RunPlayerPhase();
@@ -128,7 +142,7 @@ public class GameSceneManager : AbstractSceneManager
         if (this.nbTurn % this.nbTurnBeforeEnemySpawn == 1) {
             yield return this.cameraController.MoveToPosition(this.startPlanetObject.transform.position);
             yield return new WaitForSeconds(0.5f);
-            this.GenerateEnemyTraveler();
+            this.GenerateEnemyTraveler(this.startPlanetObject);
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(0.5f); ;
@@ -136,6 +150,10 @@ public class GameSceneManager : AbstractSceneManager
 
     private IEnumerator RunSwapPhase()
     {
+        yield return this.flashUI.Animate();
+        GalaxyPlanetObject allyPlanet = this.allyTravelerObject.currentPlanet;
+        yield return this.allyTravelerObject.TeleportToPlanet(this.playerTravelerObject.currentPlanet);
+        yield return this.playerTravelerObject.TeleportToPlanet(allyPlanet);
         yield return null;
     }
 }
