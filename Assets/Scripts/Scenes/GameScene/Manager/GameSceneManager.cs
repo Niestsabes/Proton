@@ -23,7 +23,8 @@ public class GameSceneManager : AbstractSceneManager
     public DeviceUI deviceUI;
 
     [Header("Params")]
-    public int turnToEnemySpawn = 2;
+    public int nbTurnBeforeEnemySpawn = 2;
+    public int nbTurnBeforeSwap = 3;
 
     // ===== Game status
     public Phase currentPhase { get; private set; } = GameSceneManager.Phase.OTHER;
@@ -94,6 +95,7 @@ public class GameSceneManager : AbstractSceneManager
             yield return this.RunPlayerPhase();
             yield return this.RunAllyPhase();
             yield return this.RunEnemyPhase();
+            if (this.nbTurn == this.nbTurnBeforeSwap) yield return this.RunSwapPhase();
         }
     }
 
@@ -123,12 +125,17 @@ public class GameSceneManager : AbstractSceneManager
             yield return enemy.controller.Act();
             yield return new WaitForSeconds(0.2f);
         }
-        if (this.nbTurn % this.turnToEnemySpawn == 1) {
+        if (this.nbTurn % this.nbTurnBeforeEnemySpawn == 1) {
             yield return this.cameraController.MoveToPosition(this.startPlanetObject.transform.position);
             yield return new WaitForSeconds(0.5f);
             this.GenerateEnemyTraveler();
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(0.5f); ;
+    }
+
+    private IEnumerator RunSwapPhase()
+    {
+        yield return null;
     }
 }
