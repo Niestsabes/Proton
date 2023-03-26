@@ -7,7 +7,7 @@ public class GalaxyCameraController : MonoBehaviour
 {
     [Header("Params")]
     [SerializeField] private float orthoSizeMax = 22;
-    [SerializeField] private float orthoSizeMin = 5;
+    [SerializeField] private float orthoSizeMin = 10;
     [SerializeField] private float moveSpeed;
     [SerializeField] private Vector2 moveThreshold;
     [SerializeField] private Vector2 boundLimit;
@@ -103,7 +103,7 @@ public class GalaxyCameraController : MonoBehaviour
     private IEnumerator FollowTransform(Transform transform)
     {
         this.followedTransform = transform;
-        Camera.main.orthographicSize = 10;
+        Camera.main.orthographicSize = this.orthoSizeMin;
         while (this.followedTransform == transform) {
             Vector2 dir = this.followedTransform.position - this.transform.position;
             if (dir.magnitude > this.moveMagnitude) dir = dir / dir.magnitude * this.moveMagnitude;
