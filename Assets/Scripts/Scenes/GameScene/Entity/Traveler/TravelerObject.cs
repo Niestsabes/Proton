@@ -32,7 +32,7 @@ public class TravelerObject : MonoBehaviour
         return instance;
     }
 
-    public void AddController(bool isAI)
+    public virtual void AddController(bool isAI)
     {
         if (isAI) this.controller = this.gameObject.AddComponent<TravelerControllerAI>();
         else this.controller = this.gameObject.AddComponent<TravelerControllerManual>();

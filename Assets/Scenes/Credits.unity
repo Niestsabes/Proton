@@ -360,8 +360,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Un jeu d\xE9velopp\xE9 par Am\xE9lie, Arthur, Arthur, Lise et S\xE9bastien
-    pour la scientific game Jam de lyon 2023"
+  m_text: "Un jeu d\xE9velopp\xE9 par Am\xE9lie, Arthur, Arthur, Boris, Lise et S\xE9bastien
+    pour la Scientific Game Jam de Lyon 2023"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

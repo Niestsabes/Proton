@@ -36,9 +36,9 @@ public class GameSceneManager : AbstractSceneManager
     public int nbTurn { get; private set; }
     private GalaxyObject galaxyObject;
     private GalaxyPlanetObject startPlanetObject;
-    private TravelerObject playerTravelerObject;
-    private TravelerObject allyTravelerObject;
-    private List<TravelerObject> listEnemyTravelerObject;
+    public TravelerObject playerTravelerObject { get; protected set; }
+    public TravelerObject allyTravelerObject { get; protected set; }
+    public List<TravelerObject> listEnemyTravelerObject { get; protected set; }
 
     // ===== Services
     public GameEventManager eventManager { get; private set; } = new GameEventManager();
@@ -117,7 +117,10 @@ public class GameSceneManager : AbstractSceneManager
             yield return this.RunEnemyPhase();
             yield return this.CheckGameOver();
             if (this.currentStatus != Status.PLAYING) { break; }
-            if (this.nbTurn == this.nbTurnBeforeSwap) yield return this.RunSwapPhase();
+            if (this.nbTurn == this.nbTurnBeforeSwap) {
+                yield return this.RunSwapPhase();
+                yield return this.currentStatus = Status.WIN;
+            }
         }
 
         if (this.currentStatus == Status.LOSE) this.NavigateToGameOver();
