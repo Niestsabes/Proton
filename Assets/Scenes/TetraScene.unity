@@ -245,7 +245,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 15
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -364,6 +364,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 96118299820853972, guid: a345ffb2fe64460488ead80a2c343d49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 681571637852661494, guid: a345ffb2fe64460488ead80a2c343d49, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -426,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2977843074781224069, guid: a345ffb2fe64460488ead80a2c343d49, type: 3}
       propertyPath: m_Parameters.widthMultiplier
-      value: 0.1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3274266752279476638, guid: a345ffb2fe64460488ead80a2c343d49, type: 3}
       propertyPath: isStatic
@@ -438,7 +442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5786922534321032267, guid: a345ffb2fe64460488ead80a2c343d49, type: 3}
       propertyPath: m_Parameters.widthMultiplier
-      value: 0.1
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a345ffb2fe64460488ead80a2c343d49, type: 3}
@@ -459,11 +463,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f534aa16be6cbc4187f2df1e65fd857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxA: {x: -20, y: 20}
-  minMaxB: {x: -20, y: 20}
+  minMaxA: {x: -20, y: 8}
+  minMaxB: {x: -1, y: 20}
   steppingCurve: 10
   steppingKnob: 100
-  winThreshold: 10
+  winThreshold: 2
   knobA: {fileID: 1086378152}
   knobB: {fileID: 2041931240}
 --- !u!1 &732578843

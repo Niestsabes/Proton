@@ -49,7 +49,7 @@ public class DeviceController : MonoBehaviour
             float dist = curveMgr.GetDistFromNearestCurve(curve.factorA, curve.factorB, ref nearestIdx);
             if (dist < winThreshold)
             {
-                Debug.Log("you win!");
+                Debug.Log("you win! " + dist + " " + nearestIdx);
                 // TODO
             }
         }

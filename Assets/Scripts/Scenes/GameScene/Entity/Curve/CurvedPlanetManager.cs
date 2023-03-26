@@ -13,6 +13,22 @@ public class CurvedPlanetManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Redraw();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void Redraw()
+    {
+        foreach (var planet in planets)
+            Destroy(planet);
+        planets.Clear();
+        curves.Clear();
+
         Vector3[] pos = {   new Vector3 { x = -3.22f, y = -2.44f, z = 0 }, 
                             new Vector3 { x = 6.99f, y = 4.67f, z = 0 }, 
                             new Vector3 { x = 11.31f, y = -5.5f, z = 0 } };
@@ -31,25 +47,26 @@ public class CurvedPlanetManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public float GetDistFromNearestCurve(float factorA, float factorB, ref int outNearestIdx)
     {
         float minDist = 100000000.0f;
         for (int i = 0; i < curves.Count; ++i)
         {
-            float curDist = Mathf.Abs(curves[i].factorA - factorA) + Mathf.Abs(curves[i].factorB - factorB);
-            if (curDist < minDist)
+            float curDistA = Mathf.Abs(curves[i].factorA - factorA);
+            float curDistB = Mathf.Abs(curves[i].factorB - factorB);
+            float maxCurDist = Mathf.Max(curDistA, curDistB);
+            if (maxCurDist < minDist)
             {
                 outNearestIdx = i;
-                minDist = curDist;
+                minDist = maxCurDist;
             }
         }
 
         return minDist;
+    }
+
+    void OnEnable()
+    {
+        Redraw();
     }
 }

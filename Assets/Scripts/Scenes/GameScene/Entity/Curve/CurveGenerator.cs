@@ -30,8 +30,8 @@ public class CurveGenerator : MonoBehaviour
     public void InitCurve(float maxRadius)
     {
         Start();
-        factorA = Random.Range(-50.0f, 50.0f);
-        factorB = Random.Range(-50.0f, 50.0f);
+        factorA = Random.Range(-20.0f, 8.0f);
+        factorB = Random.Range(-1.0f, 20.0f);
         GenCurve(maxRadius);
     }
 
