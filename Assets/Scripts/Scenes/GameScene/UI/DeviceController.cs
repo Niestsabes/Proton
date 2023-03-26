@@ -4,19 +4,33 @@ using UnityEngine;
 
 public class DeviceController : MonoBehaviour
 {
+    [Header("Curve")]
     public Vector2 minMaxA = new Vector2(-50.0f, 50.0f);
     public Vector2 minMaxB = new Vector2(-50.0f, 50.0f);
     public float steppingCurve = 10.0f;
-    public float steppingKnob = 10.0f;
     public float winThreshold = 10.0f;
 
-    private CurveGenerator curve;
+    [Header("Knobs")]
     public GameObject knobA;
     public GameObject knobB;
+    public float steppingKnob = 10.0f;
+
+    [Header("Audio")]
+    public AudioSource whiteNoise;
+    public AudioSource searchNote;
+    public AudioSource foundNote;
+    public AudioSource clicSound;
+    public float startFadeThreshold = 5.0f;
+    [Range(0.0f, 1.0f)]
+    public float deviceVolume = 0.8f;
+
+    private CurveGenerator curve;
+    private CurvedPlanetManager curveMgr;
 
     void Start()
     {
         curve = GetComponent<CurveGenerator>();
+        curveMgr = GameObject.Find("CurvedPlanetManager").GetComponent<CurvedPlanetManager>();
     }
 
     void Update()
@@ -31,6 +45,9 @@ public class DeviceController : MonoBehaviour
         if (Input.GetKey(KeyCode.Q) )
             dir[1] -= 1.0f;
 
+        if (dir.sqrMagnitude > 0.0f && !clicSound.isPlaying)
+            clicSound.PlayOneShot(clicSound.clip);
+
         float tCurve = Time.deltaTime * steppingCurve;
         float tKnob = Time.deltaTime * steppingKnob;
         float oldFactor = curve.factorA;
@@ -42,16 +59,36 @@ public class DeviceController : MonoBehaviour
         if (!Mathf.Approximately(curve.factorB, oldFactor))
             knobB.transform.Rotate(0, 0, tKnob * dir[1], Space.Self);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        int nearestIdx = 0;
+        float dist = curveMgr.GetDistFromNearestCurve(curve.factorA, curve.factorB, ref nearestIdx);
+
+        float clampedDist = Mathf.Clamp(dist, winThreshold, startFadeThreshold);
+        float fadeRatio = (clampedDist - winThreshold) / (startFadeThreshold - winThreshold);
+        whiteNoise.volume = fadeRatio;
+        searchNote.volume = 1.0f - fadeRatio;
+
+        if (dist < winThreshold)
         {
-            CurvedPlanetManager curveMgr = GameObject.Find("CurvedPlanetManager").GetComponent<CurvedPlanetManager>();
-            int nearestIdx = 0;
-            float dist = curveMgr.GetDistFromNearestCurve(curve.factorA, curve.factorB, ref nearestIdx);
-            if (dist < winThreshold)
+            foundNote.volume = 1.0f;
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("you win! " + dist + " " + nearestIdx);
                 GameSceneManager.instance.eventManager.onDeviceWin.Invoke(nearestIdx, dist);
             }
         }
+        else
+        {
+            foundNote.volume = 0.0f;
+        }
+
+        UpdateVolume();
+    }
+
+    void UpdateVolume()
+    {
+        clicSound.volume *= deviceVolume;
+        whiteNoise.volume *= deviceVolume;
+        searchNote.volume *= deviceVolume;
+        foundNote.volume *= deviceVolume;
     }
 }
