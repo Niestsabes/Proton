@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class DeviceUI : MonoBehaviour
 {
-    private CurvedPlanetManager curveMgr;
-
     void Start()
     {
-         //curveMgr = ;
     }
 
     public void Open(List<GalaxyPathObject> listPath) {
@@ -22,6 +19,7 @@ public class DeviceUI : MonoBehaviour
                 planets.Add(listPath[i].endPlanetObject);
             }
 
+            GameObject.Find("Main Camera").GetComponent<AudioSource>().volume = 0.0f;
             this.gameObject.SetActive(true);
             GameObject.Find("CurvedPlanetManager").GetComponent<CurvedPlanetManager>().Redraw(planetIds, planets);
         }
@@ -30,5 +28,6 @@ public class DeviceUI : MonoBehaviour
     public void Close()
     {
         if (this.gameObject.activeInHierarchy) this.gameObject.SetActive(false);
+        GameObject.Find("Main Camera").GetComponent<AudioSource>().volume = 1.0f;
     }
 }
