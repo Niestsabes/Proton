@@ -50,3 +50,6 @@ TagManager:
   - name: Traveler
     uniqueID: 399765415
     locked: 0
+  - name: Device
+    uniqueID: 2750959805
+    locked: 0
