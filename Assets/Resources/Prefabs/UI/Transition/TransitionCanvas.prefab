@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileTemplate: {fileID: 5518687940978533832}
-  nbTiles: {x: 16, y: 9}
-  transitionTime: 0.3
+  nbTiles: {x: 10, y: 5}
+  transitionTime: 0.2
 --- !u!1 &5518687940978533832
 GameObject:
   m_ObjectHideFlags: 0
