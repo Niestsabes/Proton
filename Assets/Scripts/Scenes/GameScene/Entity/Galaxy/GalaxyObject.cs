@@ -37,6 +37,7 @@ public class GalaxyObject : MonoBehaviour
         this.listPlanetObject = new GalaxyPlanetObject[listPlanet.Length];
         for (int i = 0; i < listPlanet.Length; i++) {
             this.listPlanetObject[i] = GalaxyPlanetObject.InstantiateObject(listPlanet[i], this.planetPrefab, this.transform);
+            StartCoroutine(this.listPlanetObject[i].Orbit(this.transform.position));
         }
     }
 

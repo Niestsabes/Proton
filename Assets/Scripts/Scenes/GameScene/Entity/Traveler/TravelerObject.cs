@@ -20,6 +20,7 @@ public class TravelerObject : MonoBehaviour
         TravelerObject instance = GameObject.Instantiate(prefab, planet.transform.position, Quaternion.identity).GetComponent<TravelerObject>();
         if (instance == null) { throw new System.Exception("Pas de script TravelerObject dans le prefab"); }
         instance.currentPlanet = planet;
+        instance.transform.SetParent(instance.currentPlanet.transform);
         return instance;
     }
 
@@ -31,6 +32,7 @@ public class TravelerObject : MonoBehaviour
 
     public IEnumerator MoveToPlanet(GalaxyPlanetObject targetPlanet)
     {
+        this.transform.SetParent(null);
         GalaxyPathObject path = this.currentPlanet.listPathObject.Find(path => path.endPlanetObject == targetPlanet);
         if (path == null) { throw new System.Exception("Le personage ne peut pas aller sur cette planéte!"); }
         Vector3[] positions = path.positions;
@@ -47,6 +49,7 @@ public class TravelerObject : MonoBehaviour
 
         this.previousPlanet = this.currentPlanet;
         this.currentPlanet = targetPlanet;
+        this.transform.SetParent(this.currentPlanet.transform);
         this.transform.position = targetPlanet.transform.position;
         yield return null;
     }

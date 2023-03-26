@@ -14,6 +14,8 @@ public class GalaxyPathObject : MonoBehaviour
     public GalaxyPlanetObject startPlanetObject { get; protected set; }
     public GalaxyPlanetObject endPlanetObject { get; protected set; }
 
+    public bool isVisible { get; protected set; }
+
     void Update()
     {
         this.AnimateLineOndulation();
@@ -61,6 +63,7 @@ public class GalaxyPathObject : MonoBehaviour
     /// <param name="isVisible"></param>
     public void SetVisible(bool isVisible)
     {
+        this.isVisible = isVisible;
         this.lineRenderer.enabled = isVisible;
     }
 

@@ -25,7 +25,7 @@ public class SpaceBackgroundObject : MonoBehaviour
 
     private void ResizeBackgroundObject()
     {
-        this.backgroundObject.size = this.backgroundObject.sprite.bounds.max * 6;
+        this.backgroundObject.size = this.backgroundObject.sprite.bounds.max * 16;
         this.maxOffset = this.backgroundObject.sprite.bounds.max * 2;
     }
 
