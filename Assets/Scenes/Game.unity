@@ -466,7 +466,7 @@ MonoBehaviour:
   flashUI: {fileID: 343113503}
   nbEnemyOnStart: 5
   nbTurnBeforeEnemySpawn: 2
-  nbTurnBeforeSwap: 2
+  nbTurnBeforeSwap: 10
 --- !u!114 &480139340
 MonoBehaviour:
   m_ObjectHideFlags: 0
