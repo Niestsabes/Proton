@@ -29,21 +29,28 @@ public class CurvedPlanetManager : MonoBehaviour
         planets.Clear();
         curves.Clear();
 
-        Vector3[] pos = {   new Vector3 { x = -3.22f, y = -2.44f, z = 0 }, 
-                            new Vector3 { x = 6.99f, y = 4.67f, z = 0 }, 
-                            new Vector3 { x = 11.31f, y = -5.5f, z = 0 } };
+        Vector3[] pos = {   new Vector3 { x = -1f, y = -2f, z = 0 }, 
+                            new Vector3 { x = 2.5f, y = 2f, z = 0 }, 
+                            new Vector3 { x = 6f, y = -2f, z = 0 } };
         for (int i = 0; i < 3; ++i)
         {
-            GameObject newPlanet = (GameObject)Instantiate(planetPrefab, pos[i], Quaternion.identity);
+            GameObject newPlanet = (GameObject)Instantiate(planetPrefab, transform);
+            newPlanet.transform.localPosition = pos[i];
             planets.Add(newPlanet);
-            newPlanet.transform.parent = transform;
             var curve = newPlanet.transform.Find("Curve").GetComponent<CurveGenerator>();
+            // texture.GetComponent<SpriteRenderer>().sortingLayerName = "Device";
             curves.Add(curve);
             curve.InitCurve(20.0f);
             int textureIdx = i; // TODO
             GameObject texture = (GameObject)Instantiate(texturePrefabs[i], Vector3.zero, Quaternion.identity);
             texture.transform.parent = newPlanet.transform;
             texture.transform.localPosition = Vector3.zero;
+            texture.GetComponent<SpriteRenderer>().sortingLayerName = "Device";
+            var lines = newPlanet.GetComponentsInChildren<LineRenderer>();
+            foreach (var line in lines) {
+                line.sortingLayerName = "Device";
+            }
+            newPlanet.transform.localScale = Vector3.one * 0.6f;
         }
     }
 

@@ -1,21 +1,28 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TravelerControllerManual : TravelerController
 {
+    private bool isActing = false;
+    private bool isListeningInput = false;
+    private List<GalaxyPathObject> listAccessiblePath;
+
     public override IEnumerator Act()
     {
+        this.isActing = true;
+
         // Mettre à jour la UI et les interactions
-        this.travelerObject.currentPlanet.listPathObject.ForEach(path => {
-            if (path.endPlanetObject != this.travelerObject.previousPlanet) {
-                path.SetVisible(true);
-                path.endPlanetObject.SetSelectable(true);
-            }
-        });
+        this.listAccessiblePath = this.travelerObject.currentPlanet.listPathObject
+            .Where((path) => path.endPlanetObject != this.travelerObject.previousPlanet).ToList();
+        this.listAccessiblePath.ForEach(path => { path.SetVisible(true); path.endPlanetObject.SetSelectable(true); });
+        StartCoroutine(this.ListenInput());
 
         // Attendre que le joueur choisisse une planéte
         GalaxyPlanetObject planetObjSelect = null;
-        GameSceneManager.instance.eventManager.planetSelect.AddListener(planetObj => { planetObjSelect = planetObj; });
+        // GameSceneManager.instance.eventManager.onDeviceWin.AddListener(planetObj => { planetObjSelect = planetObj; });
         yield return new WaitUntil(() => planetObjSelect != null);
 
         // Désactiver les interactions
@@ -30,5 +37,25 @@ public class TravelerControllerManual : TravelerController
 
         // Nettoyer la UI
         oldPlanet.SetPathsVisible(false);
+
+        this.isActing = false;
+        this.StopListeningInput();
+        this.listAccessiblePath = new List<GalaxyPathObject>() { };
+    }
+
+    private IEnumerator ListenInput()
+    {
+        this.isListeningInput = true;
+        while(this.isListeningInput && this.isActing) {
+            if (Input.GetKey(KeyCode.Space)) { GameSceneManager.instance.deviceUI.Open(this.listAccessiblePath.Select(path => path.endPlanetObject).ToList()); }
+            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) { GameSceneManager.instance.deviceUI.Close(); }
+            yield return new WaitForEndOfFrame();
+        }
+        this.isListeningInput = false;
+    }
+
+    private void StopListeningInput()
+    {
+        this.isListeningInput = false;
     }
 }

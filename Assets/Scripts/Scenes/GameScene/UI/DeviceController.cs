@@ -50,7 +50,7 @@ public class DeviceController : MonoBehaviour
             if (dist < winThreshold)
             {
                 Debug.Log("you win! " + dist + " " + nearestIdx);
-                // TODO
+                GameSceneManager.instance.eventManager.onDeviceWin.Invoke(nearestIdx, dist);
             }
         }
     }

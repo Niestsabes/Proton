@@ -19,6 +19,7 @@ public class GameSceneManager : AbstractSceneManager
 
     [Header("GameObjects")]
     public GalaxyCameraController cameraController;
+    public DeviceUI deviceUI;
 
     // ===== Game status
     public Phase currentPhase { get; private set; } = GameSceneManager.Phase.OTHER;
@@ -38,6 +39,7 @@ public class GameSceneManager : AbstractSceneManager
     {
         if (GameSceneManager.instance != null) { Destroy(GameSceneManager.instance); }
         GameSceneManager._instance = this;
+        this.SetupUI();
     }
 
     void Start()
@@ -70,6 +72,11 @@ public class GameSceneManager : AbstractSceneManager
         TravelerObject newEnemy = TravelerObject.InstantiateObject(this.travelerPrefab, this.startPlanetObject);
         newEnemy.AddController(true);
         this.listEnemyTravelerObject.Add(newEnemy);
+    }
+
+    private void SetupUI()
+    {
+        this.deviceUI.Close();
     }
 
     private IEnumerator RunGame()
