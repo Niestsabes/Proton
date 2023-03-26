@@ -464,7 +464,7 @@ MonoBehaviour:
   cameraController: {fileID: 1575065892}
   deviceUI: {fileID: 1876170001}
   flashUI: {fileID: 343113503}
-  nbEnemyOnStart: 2
+  nbEnemyOnStart: 50
   nbTurnBeforeEnemySpawn: 2
   nbTurnBeforeSwap: 2
 --- !u!114 &480139340
